@@ -1,0 +1,793 @@
+/* ========================
+   Global & Root Variables
+======================== */
+* {
+  box-sizing: border-box; /* Ensures padding and border are included in total element size */
+}
+
+:root {
+  --primary-color: #ffffff;
+  --secondary-color: #f4f7fd;
+  --primary-font-color: #000000;
+  --secondary-font-color: #828fa3;
+  --primary-btn-color: #635fc7;
+  --primary-box-shadow: 0px 4px 6px rgba(54, 78, 126, 0.1015); /* Subtle shadow for card depth */
+  --sidebar-width: 300px; /* Sidebar fixed width */
+}
+
+/*=============================
+DARK MODE VARIABLE
+=============================*/
+
+[data-theme="dark"] {
+  --primary-color: #0f1117;      /* page background */
+  --secondary-color: #111827;    /* cards / panels / header */
+  --primary-font-color: #e5e7eb; /* main text */
+  --secondary-font-color: #9aa4b2;/* muted text */
+  --primary-btn-color: #8c85ff;  /* brand accent tuned for dark */
+  --primary-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.45);
+}
+
+
+
+/* ================
+   Base Elements
+================ */
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  display: flex; /* Allow layout to span horizontally */
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--secondary-color);
+  font-size: 1rem; /* Base font size for rem scaling */
+}
+
+/* ================
+   Sidebar Layout
+================ */
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--primary-color);
+  border-right: 1px solid #e4ebfa; /* Light divider */
+  width: var(--sidebar-width);
+  height: 100vh;
+}
+
+/* this is the hidden property for the sidebar */
+.side-bar.hidden {
+display: none;
+}
+
+#side-logo-div {
+  margin: 33px 113px 54px 34px; /* Spacing around logo */
+  display: flex;
+  justify-content: flex-start;
+}
+
+#logo {
+  width: 100%; /* Make logo responsive within container */
+}
+
+.boards-nav-links-div {
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-font-color);
+}
+
+#headline-sidepanel {
+  padding: 0 12px 0 50px; /* Aligns section content from left and right */
+}
+
+h4 {
+  color: var(--secondary-font-color);
+  font-size: 0.75rem;
+  letter-spacing: 0.125rem; /* Makes heading more spaced */
+}
+
+.board-btn {
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between icon and text */
+  background-color: var(--primary-btn-color);
+  color: #fff;
+  border: none;
+  border-radius: 0 100px 100px 0; /* Pill shape only on right side */
+  height: 48px;
+  width: 276px;
+  padding: 28px 12px 28px 50px;
+  font-size: 0.9375rem;
+  font-weight: bold;
+  cursor: pointer;
+  overflow: hidden; /* Prevents overflowed text/icons from showing */
+}
+
+.sidebar-btn { background-color: var(--secondary-color);
+  color: var(--primary-btn-color);
+  border-radius: 30px;
+  border: 0;
+  font-size: 16px;
+  padding: 18px;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 20px;
+  height: 48px;
+  width: 276px;
+  position: fixed;   /* stays in place even when scrolling */
+  bottom: 20px;      /* distance from the bottom of the screen */
+  left: 20px;        /* distance from the left of the screen */
+  z-index: 1000; 
+}
+
+/* base position — bottom-left (switch to right:12px; left:auto; if you want bottom-right) */
+.open-sidebar{
+  position: fixed;
+  align-items: center;
+  z-index: 1001;
+  display: none;              /* hidden by default */
+  border: 0;
+ border-bottom-right-radius: 15px;
+ border-top-right-radius: 15px;
+  cursor: pointer;
+  background-color: var(--primary-btn-color);
+  height: 48px;
+  width: 50px;
+  font-size: x-large;
+  bottom: 35px;
+}
+
+/* show it only when the sidebar is hidden */
+.sidebar-hidden .open-sidebar{
+  display: inline-flex;
+}
+
+/*==============================
+    THEME TOGGLE 
+  ==============================*/
+
+
+.theme-change { 
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--secondary-color);
+  color: var(--primary-btn-color);
+  border-radius: 30px;
+  border: 0;
+  font-size: 16px;
+  padding: 18px;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 20px;
+  height: 48px;
+  width: 276px;
+  position: fixed;   /* stays in place even when scrolling */
+  bottom: 80px;      /* distance from the bottom of the screen */
+  left: 20px;        /* distance from the left of the screen */
+  z-index: 1000;
+  gap: 10px; 
+}
+
+/* the switch (your .darkmode label) */
+.darkmode{
+  position:relative;
+  display:inline-block;
+  width:48px;  /* track width */
+  height:28px; /* track height */
+}
+
+/* hide the real checkbox but keep it accessible */
+.darkmode input{
+  position:absolute;
+  inline-size:1px;
+  block-size:1px;
+  margin:-1px;
+  padding:0;
+  border:0;
+  white-space:nowrap;
+  clip-path: inset(50%);
+  clip: rect(0 0 0 0);
+  overflow:hidden;
+}
+
+/* track */
+.darkmode .slider{
+  position:absolute;
+  inset:0;
+  background: var(--switch-track, #cbc5ff);
+  border-radius:9999px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.12);
+  transition: background .25s ease;
+  cursor:pointer;
+}
+
+/* thumb */
+.darkmode .slider::before{
+  content:"";
+  position:absolute;
+  top:3px; left:3px;
+  width:22px; height:22px;
+  border-radius:50%;
+  background: var(--thumb, #fff);
+  box-shadow: 0 1px 2px rgba(0,0,0,.25);
+  transition: transform .25s ease;
+}
+
+/* checked = dark mode */
+.darkmode input:checked + .slider{
+  background: var(--switch-track-on, #6c63ff);
+}
+.darkmode input:checked + .slider::before{
+  transform: translateX(20px);
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .darkmode .slider, .darkmode .slider::before{ transition:none; }
+}
+
+/*Hides the toggle with the side bar when the side bar is hidden*/
+
+.sidebar-hidden .theme-change {
+  display: none;
+}
+
+/*==================
+THEME TOGGLE MOBILE VIEW
+==================*/
+
+/* overlay + popover menu (mobile) */
+.overlay{
+  position: fixed; 
+  inset: 0; 
+  background: rgba(12,12,14,.45);
+  display: none; 
+  z-index: 40;
+}
+.overlay.is-open{ display: block; }
+
+.menu{
+  position: fixed; 
+  top: 64px; 
+  left: 50%; 
+  transform: translateX(-50%);
+  width: 92%; 
+  max-width: 360px; 
+  background: var(--surface, #fff);
+  border-radius: 14px; 
+  padding: 14px; 
+  box-shadow: 0 24px 60px rgba(0,0,0,.20);
+  display: none; 
+  z-index: 50;
+}
+.menu.is-open{ display: block; }
+.menu-title{ font-size: 10px; 
+  letter-spacing: .12em; 
+  color:#8a8fa3; 
+  margin-bottom: 8px; }
+
+/* when your .theme-change sits inside the menu, simplify its look */
+.menu .theme-change{
+  position: static; 
+  width:auto; 
+  margin-top:10px; 
+  background:#f3f4fe;
+  border-radius:12px; 
+  padding:10px 12px; 
+  display:flex; 
+  align-items:center; 
+  gap:10px;
+}
+
+/* desktop: hide the mobile menu entirely */
+@media (min-width: 769px){
+  .overlay, .menu{ display:none !important; }
+}
+
+/* ===============
+   Main Layout
+================ */
+#layout {
+  flex: 1; /* Fills remaining space beside sidebar */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 100%;
+}
+
+/* ===============
+   Header Section
+================ */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-color);
+  color: var(--primary-font-color);
+  height: 96px;
+  padding: 0 35px 0 30px;
+  border-bottom: 1px solid #e4ebfa;
+  width: 100%;
+  font-size: 1.875rem;
+  font-weight: 600;
+}
+
+.header-name-div {
+  display: flex;
+  align-items: center;
+}
+
+.logo-mobile {
+  display: none; /* Hidden on desktop; shown on smaller screens */
+}
+
+/* ===============
+   Board Columns
+================ */
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 35px;
+  box-sizing: border-box;
+}
+
+.card-column-main {
+  display: grid;
+  grid-template-columns: repeat(
+    3,
+    minmax(0, 304px)
+  ); /* 3 columns with min size */
+  gap: 8px; /* Space between columns */
+}
+
+.column-div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 12px;
+}
+
+.column-head-div {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between dot and column title */
+}
+
+.columnHeader {
+  font-size: 0.75rem;
+  letter-spacing: 0.125rem;
+  color: var(--secondary-font-color);
+  margin: 0;
+}
+
+/* Status Dots */
+.dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%; /* Make it circular */
+  display: inline-block;
+}
+
+#todo-dot {
+  background-color: #49c4e5;
+}
+
+#doing-dot {
+  background-color: #8471f2;
+}
+
+#done-dot {
+  background-color: #219c90;
+}
+
+/* ===============
+   Task Cards
+================ */
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-div{
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  width: 100%;
+  height: 60px;
+  background-color: var(--primary-color);
+  color: var(--primary-font-color);
+  border-radius: 12px;
+  box-shadow: var(--primary-box-shadow);
+  cursor: pointer; /* Indicate it's clickable */
+  margin-bottom: 20px;
+  font-size: 0.9375rem;
+  font-weight: bold;
+}
+
+.task-card{
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  width: 100%;
+  height: 60px;
+  background-color: var(--primary-color);
+  color: var(--primary-font-color);
+  border-radius: 12px;
+  box-shadow: var(--primary-box-shadow);
+  cursor: pointer; /* Indicate it's clickable */
+  margin-bottom: 20px;
+  font-size: 0.9375rem;
+  font-weight: bold;
+}
+
+.task-title {
+  color: var(--primary-font-color);
+  font-weight: bold;
+}
+
+
+/* ===============
+   Headings
+================ */
+h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* ===============
+   Modal Styles
+================ */
+/* Remove default dialog styles */
+dialog {
+  position: fixed;
+
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+
+/* Style the modal box */
+#task-modal::backdrop {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#task-modal {
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  padding: 24px;
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  /*font-family: "Plus Jakarta Sans", sans-serif;*/
+}
+
+/* Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #ea5555;
+  transition: transform 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+  transition-delay: 0.1s; /* Delay before scaling */
+}
+
+.close-btn:hover {
+  transform: scale(1.15);
+  font-weight: 600;
+}
+
+.close-btn:focus {
+  outline: none;
+}
+
+/* Form elements */
+form label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.75rem;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  color: #828fa3;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #828fa3;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.8125em;
+  resize: vertical;
+}
+
+form select {
+  appearance: none; /* Remove native arrow */
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="%23828FA3" stroke-width="3" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>')
+    no-repeat right 0.75rem center;
+
+  background-size: 1.4rem;
+  padding-right: 1rem;
+}
+
+#add-new-task-btn {
+  background-color: var(--primary-btn-color);
+  color: white;
+  border-radius: 30px;
+  border: 0;
+  font-size: 16px;
+  padding: 18px;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+/* save changes and delete task button styling*/
+
+.save-btn{
+border-radius: 30px;
+  border: 0;
+  font-size: 16px;
+  padding: 18px;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--primary-btn-color);
+  color: #fff;
+}
+
+.delete-btn{
+border-radius: 30px;
+  border: 0;
+  font-size: 16px;
+  padding: 18px;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: red;
+  color: #fff;
+
+}
+
+.save-and-delete {
+
+display: flex;
+gap:10px;
+align-items: stretch;
+flex-direction: row;
+
+}
+
+.save-and-delete > *{
+flex:1 1 0;
+min-width: none;
+
+}
+
+
+/* New Task Modal Window */
+
+.modal-window {
+  /* border: 5px solid red; */
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 20px;
+  background-color: var(--primary-color);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 10px;
+
+  z-index: 3;
+  transition: all 0.3s ease-in;
+}
+
+.submit-btn {
+  background-color: var(--primary-btn-color);
+  color: white;
+  border-radius: 30px;
+  border: 0;
+  font-size: 16px;
+  padding: 14px;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-grow: 1; /* Allows the button to grow and fill the space */
+  margin: 5px 0; /* Optional: adds a margin between buttons */
+}
+
+textarea {
+  font-size: 16px;
+  color: black;
+  height: 90px;
+  padding: 10px;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/* ========================
+   Responsive Styles
+======================== */
+
+/******** Tablets ********/
+@media screen and (max-width: 1023px) {
+  .side-bar {
+    display: none; /* Hide sidebar on tablets and smaller */
+  }
+
+
+
+  .side-bar.show-sidebar {
+    display: flex !important;
+    position: fixed; /* Overlay on top of page */
+    height: auto;
+  }
+
+  #side-logo-div {
+    display: none;
+  }
+
+  .logo-mobile {
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  body {
+    font-size: 0.8rem;
+  }
+
+  .board-btn {
+    font-size: 0.8rem;
+    padding-left: 15px;
+    margin-right: 15px;
+    font-weight: 700;
+  }
+
+  .container {
+    padding: 0;
+    width: 100%;
+    align-items: center; /* Center columns on smaller screens */
+  }
+
+  .card-column-main {
+    grid-template-columns: repeat(2, minmax(0, 360px));
+    gap: 8px;
+  }
+
+  header {
+    height: 64px;
+    padding: 0 10px 0 18px;
+    border: none;
+  }
+
+  #header-board-name {
+    font-size: 1rem;
+  }
+
+  .task-div {
+    width: 100%;
+  }
+
+  .task-card {
+width: 100%;
+
+  }
+
+  .columnHeader {
+    font-size: 0.75rem;
+  }
+
+  .dot {
+    height: 8px;
+    width: 8px;
+  }
+
+  .column-head-div {
+    gap: 8px;
+  }
+
+  .column-div {
+    width: 100%;
+  }
+}
+
+/******** Mobile ********/
+@media screen and (max-width: 576px) {
+  .card-column-main {
+    grid-template-columns: minmax(
+      0,
+      380px
+    ); /* Stack columns in single column */
+  }
+
+  .column-div {
+    padding: 24px;
+  }
+
+    .header-board-name {
+
+display:none;
+
+  }
+
+  #add-new-task-btn {
+    font-size: 0;
+    padding: 12px;
+  }
+
+  #add-new-task-btn::before {
+    content: "+";
+    font-size: 18px;
+    font-weight: 800;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* Responsive Mobile design for Save and Delete Button */
+
+@media (max-width: 768px) {
+  .save-and-delete {
+    flex-direction: column; /* stack items top-to-bottom */
+    align-items: stretch;   /* make them fill the width */
+  }
+}
+
+/* =============================================
+    STRETCH GOALS
+================================================*/
+
+.priority-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 8px;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 2px solid rgba(0,0,0,0.06); /* subtle ring */
+}
+
+/* color mapping */
+.priority-dot.high   { background: #ef4444; } /* red   */
+.priority-dot.medium { background: #f59e0b; } /* orange*/
+.priority-dot.low    { background: #22c55e; } /* green */
