@@ -3,13 +3,12 @@
 A responsive, mobile-friendly Kanban board built with HTML, CSS, and JavaScript.
 It supports task creation, editing, and deletion, with full localStorage persistence, a toggleable sidebar, dark/light mode, and an optional priority system (High / Medium / Low).
 
-🚀 Live Demo
+🚀 View Presentaion here
+https://drive.google.com/file/d/1CRxb0D0EomHYDJlPWTjaLTaXPPhaUWdd/view?usp=sharing 
 
 👉 View on Netlify
  (https://68d6931d5be0983d792ea82a--animated-profiterole-e41357.netlify.app/)
 
-👉 View my presentation here: 
-https://drive.google.com/file/d/1CRxb0D0EomHYDJlPWTjaLTaXPPhaUWdd/view?usp=sharing 
 ---------------------------------------------------------------
 
 ✨ Features
