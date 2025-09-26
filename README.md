@@ -6,7 +6,7 @@ It supports task creation, editing, and deletion, with full localStorage persist
 🚀 Live Demo
 
 👉 View on Netlify
- (replace with your deployed link)
+ (https://68d6931d5be0983d792ea82a--animated-profiterole-e41357.netlify.app/)
 
 👉 View my presentation here: 
 https://drive.google.com/file/d/1CRxb0D0EomHYDJlPWTjaLTaXPPhaUWdd/view?usp=sharing 
